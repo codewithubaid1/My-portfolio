@@ -334,10 +334,9 @@ export default function HackerPortfolio() {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
-              
-                href="mailto:uboy6892@gmail.com"
-                className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black font-bold rounded hover:bg-green-400 transition-all"
-              >
+                 <a
+                   href="mailto:uboy6892@gmail.com"
+                 className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black font-bold rounded hover:bg-green-400 transition-all">
                 <Mail className="w-5 h-5" />
                 Email Me
               </a>
