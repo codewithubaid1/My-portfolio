@@ -1,38 +1,38 @@
 'use client'
 
 import React, { useState, useEffect } from 'react';
-import { Terminal, Shield, Bug, Target, Award, Mail, ChevronDown, Menu, X,  } from 'lucide-react';
+import { Terminal, Shield, Bug, Target, Award, Mail, ChevronDown, Menu, X } from 'lucide-react';
 import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default function HackerPortfolio() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [terminalText, setTerminalText] = useState('');
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);  
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
   const textArray = [
-  '> Initializing security protocols...',
-  '> Scanning for vulnerabilities...',
-  '> Exploitation framework loaded...'
-];
+    '> Initializing security protocols...',
+    '> Scanning for vulnerabilities...',
+    '> Exploitation framework loaded...'
+  ];
 
   useEffect(() => {
-  let index = 0;
-  const currentText = textArray[currentTextIndex];
-  
-  const timer = setInterval(() => {
-    if (index <= currentText.length) {
-      setTerminalText(currentText.slice(0, index));
-      index++;
-    } else {
-      // Wait 2 seconds before moving to next text
-      setTimeout(() => {
-        setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
-      }, 2000);
-      clearInterval(timer);
-    }
-  }, 50);
-  
-  return () => clearInterval(timer);
-}, [currentTextIndex]);
+    let index = 0;
+    const currentText = textArray[currentTextIndex];
+    
+    const timer = setInterval(() => {
+      if (index <= currentText.length) {
+        setTerminalText(currentText.slice(0, index));
+        index++;
+      } else {
+        setTimeout(() => {
+          setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
+        }, 2000);
+        clearInterval(timer);
+      }
+    }, 50);
+    
+    return () => clearInterval(timer);
+  }, [currentTextIndex]);
 
   const skills = [
     { name: 'Web Application Security', level: 95 },
@@ -142,17 +142,17 @@ export default function HackerPortfolio() {
       <section className="relative min-h-screen flex items-center justify-center px-4">
         <div className="max-w-4xl py-20 mx-auto text-center space-y-8 relative z-10">
           <div className="inline-block p-4 border-2 border-green-500 rounded-lg bg-black/50 backdrop-blur-sm">
-            <Terminal className="w-16 h-12 mx-auto  mb-4 animate-pulse" />
+            <Terminal className="w-16 h-16 mx-auto mb-4 animate-pulse" />
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-5xl font-bold tracking-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight">
             <span className="text-white">SECURITY</span>
             <br />
             <span className="text-green-400">RESEARCHER</span>
           </h1>
           
           <div className="bg-black/70 border border-green-500/50 rounded p-4 text-left max-w-2xl mx-auto">
-            <p className="text-sm  sm:text-base">{terminalText}<span className="animate-pulse">_</span></p>
+            <p className="text-sm sm:text-base">{terminalText}<span className="animate-pulse">_</span></p>
           </div>
           
           <p className="text-lg sm:text-xl text-green-300 max-w-2xl mx-auto">
@@ -174,7 +174,7 @@ export default function HackerPortfolio() {
             </button>
           </div>
           
-          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
             <ChevronDown className="w-8 h-8" />
           </div>
         </div>
@@ -334,7 +334,7 @@ export default function HackerPortfolio() {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
-              <a
+              
                 href="mailto:uboy6892@gmail.com"
                 className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black font-bold rounded hover:bg-green-400 transition-all"
               >
@@ -345,13 +345,13 @@ export default function HackerPortfolio() {
           </div>
           
           <div className="flex justify-center gap-6">
-            <a href="https://github.com/codewithubaid1" target="_blank" className="hover:text-green-300 transition-colors">
+            <a href="https://github.com/codewithubaid1" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
               <FaGithub className="w-8 h-8" />
             </a>
-            <a href="https://www.linkedin.com/in/unknown-boy-65b5533a0/" target="_blank" className="hover:text-green-300 transition-colors">
+            <a href="https://www.linkedin.com/in/unknown-boy-65b5533a0/" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
               <FaLinkedin className="w-8 h-8" />
             </a>
-            <a href="https://discord.gg/GEwxr5wV" target="_blank" className="hover:text-green-300 transition-colors">
+            <a href="https://discord.gg/GEwxr5wV" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
               <FaDiscord className="w-8 h-8" />
             </a>
           </div>
