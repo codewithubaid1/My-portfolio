@@ -151,7 +151,7 @@ export default function HackerPortfolio() {
             <span className="text-green-400">RESEARCHER</span>
           </h1>
           
-          <div className="bg-black/70 border border-green-500/50 rounded p-4 text-left max-w-2xl mx-auto">
+          <div className="bg-black/70 border border-green-500/50 rounded py-4 px-3 text-left max-w-2xl mx-auto">
             <p className="text-sm sm:text-base">{terminalText}<span className="animate-pulse">_</span></p>
           </div>
           
