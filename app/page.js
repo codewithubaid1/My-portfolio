@@ -140,7 +140,7 @@ export default function HackerPortfolio() {
           </h1>
           
           <div className="bg-black/70 border border-green-500/50 rounded p-4 text-left max-w-2xl mx-auto">
-            <p className="text-sm sm:text-base">{terminalText}<span className="animate-pulse">_</span></p>
+            <p className="text-sm text-center sm:text-base">{terminalText}<span className="animate-pulse">_</span></p>
           </div>
           
           <p className="text-lg sm:text-xl text-green-300 max-w-2xl mx-auto">
