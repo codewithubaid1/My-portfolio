@@ -5,7 +5,6 @@ import { Terminal, Shield, Bug, Target, Award, Mail, ChevronDown, Menu, X,  } fr
 import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default function HackerPortfolio() {
-  const [terminalText, setTerminalText] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [terminalText, setTerminalText] = useState('');
   const [currentTextIndex, setCurrentTextIndex] = useState(0);  
