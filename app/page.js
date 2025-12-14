@@ -7,20 +7,33 @@ import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
 export default function HackerPortfolio() {
   const [terminalText, setTerminalText] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const fullText = '> Initializing security protocols...';
+  const [terminalText, setTerminalText] = useState('');
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);  
+  const textArray = [
+  '> Initializing security protocols...',
+  '> Scanning for vulnerabilities...',
+  '> Exploitation framework loaded...'
+];
 
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= fullText.length) {
-        setTerminalText(fullText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 50);
-    return () => clearInterval(timer);
-  }, []);
+  let index = 0;
+  const currentText = textArray[currentTextIndex];
+  
+  const timer = setInterval(() => {
+    if (index <= currentText.length) {
+      setTerminalText(currentText.slice(0, index));
+      index++;
+    } else {
+      // Wait 2 seconds before moving to next text
+      setTimeout(() => {
+        setCurrentTextIndex((prev) => (prev + 1) % textArray.length);
+      }, 2000);
+      clearInterval(timer);
+    }
+  }, 50);
+  
+  return () => clearInterval(timer);
+}, [currentTextIndex]);
 
   const skills = [
     { name: 'Web Application Security', level: 95 },
