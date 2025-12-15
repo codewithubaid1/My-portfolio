@@ -297,7 +297,7 @@ export default function HackerPortfolio() {
       {/* Achievements Section */}
       <section id="achievements" className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
+          <h2 className="text-xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
             <Award className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ grep -i achievements</span>
           </h2>
