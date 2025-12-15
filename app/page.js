@@ -357,7 +357,7 @@ export default function HackerPortfolio() {
       {/* Achievements Section */}
       <section id="achievements" className="py-20 px-4" ref={(el) => (sectionRefs.current.achievements = el)}>
         <div className="max-w-5xl mx-auto">
-          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
+          <h2 className={`text-xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
             visibleSections.achievements ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
           }`}>
             <Award className="w-8 h-8" />
