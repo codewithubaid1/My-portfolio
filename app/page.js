@@ -183,7 +183,7 @@ export default function HackerPortfolio() {
       {/* About Section */}
       <section id="about" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
             <Shield className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ whoami</span>
           </h2>
@@ -233,7 +233,7 @@ export default function HackerPortfolio() {
       {/* Skills Section */}
       <section id="skills" className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
             <Terminal className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ cat skills.txt</span>
           </h2>
@@ -260,7 +260,7 @@ export default function HackerPortfolio() {
       {/* Projects Section */}
       <section id="projects" className="py-20 px-4 bg-gradient-to-b from-green-950/20 to-black">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
             <Bug className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ ls -la findings/</span>
           </h2>
@@ -297,7 +297,7 @@ export default function HackerPortfolio() {
       {/* Achievements Section */}
       <section id="achievements" className="py-20 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 flex items-center gap-3">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
             <Award className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ grep -i achievements</span>
           </h2>
@@ -322,7 +322,7 @@ export default function HackerPortfolio() {
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-12 flex items-center justify-center gap-3">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center justify-center gap-3">
             <Mail className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ echo "Contact"</span>
           </h2>
