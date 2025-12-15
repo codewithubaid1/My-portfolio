@@ -10,7 +10,7 @@ export default function HackerPortfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   const textArray = [
-    '> Initializing security protocols...',
+    '> Initializing protocols...',
     '> Scanning for vulnerabilities...',
     '> Exploitation framework loaded...'
   ];
