@@ -1,13 +1,15 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
-import { Terminal, Shield, Bug, Target, Award, Mail, ChevronDown, Menu, X } from 'lucide-react';
-import { FaDiscord, FaGithub, FaLinkedin } from 'react-icons/fa';
+import React, { useState, useEffect, useRef } from 'react';
+import { Terminal, Shield, Bug, Target, Award, Mail, ChevronDown, Menu, X, Github, Linkedin } from 'lucide-react';
 
 export default function HackerPortfolio() {
   const [terminalText, setTerminalText] = useState('');
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [contactText, setContactText] = useState('');
+  const [visibleSections, setVisibleSections] = useState({});
+  const sectionRefs = useRef({});
   
   const textArray = [
     '> Initializing protocols...',
@@ -33,6 +35,48 @@ export default function HackerPortfolio() {
     
     return () => clearInterval(timer);
   }, [currentTextIndex]);
+
+  // Intersection Observer for scroll animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => ({
+              ...prev,
+              [entry.target.id]: true,
+            }));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    Object.values(sectionRefs.current).forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Typewriter effect for contact section
+  useEffect(() => {
+    if (visibleSections.contact) {
+      const fullText = "Interested in collaboration or have a security concern? Let's connect and make the digital world safer.";
+      let index = 0;
+      
+      const timer = setInterval(() => {
+        if (index <= fullText.length) {
+          setContactText(fullText.slice(0, index));
+          index++;
+        } else {
+          clearInterval(timer);
+        }
+      }, 30);
+      
+      return () => clearInterval(timer);
+    }
+  }, [visibleSections.contact]);
 
   const skills = [
     { name: 'Web Application Security', level: 95 },
@@ -181,15 +225,19 @@ export default function HackerPortfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20">
+      <section id="about" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20" ref={(el) => (sectionRefs.current.about = el)}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
+            visibleSections.about ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+          }`}>
             <Shield className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ whoami</span>
           </h2>
           
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-4 border border-green-500/30 p-6 rounded-lg bg-black/50">
+            <div className={`space-y-4 border border-green-500/30 p-6 rounded-lg bg-black/50 transition-all duration-700 delay-100 ${
+              visibleSections.about ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
               <p className="text-green-300 leading-relaxed">
                 Passionate cybersecurity professional specializing in offensive security and vulnerability research. 
                 With extensive experience in bug bounty programs and penetration testing, I help organizations 
@@ -202,53 +250,60 @@ export default function HackerPortfolio() {
             </div>
             
             <div className="space-y-4">
-              <div className="border border-green-500/30 p-4 rounded-lg bg-black/50 hover:border-green-500 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
-                  <Bug className="w-5 h-5" />
-                  <h3 className="font-bold text-white">Bug Bounty</h3>
+              {[
+                { icon: Bug, title: 'Bug Bounty', text: '125+ valid vulnerabilities reported', delay: 200 },
+                { icon: Target, title: 'Penetration Testing', text: '50+ enterprise assessments completed', delay: 300 },
+                { icon: Award, title: 'Recognition', text: 'Hall of Fame in 30+ organizations', delay: 400 }
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`border border-green-500/30 p-4 rounded-lg bg-black/50 hover:border-green-500 transition-all duration-700 ${
+                    visibleSections.about ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
+                  }`}
+                  style={{ transitionDelay: `${item.delay}ms` }}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <item.icon className="w-5 h-5" />
+                    <h3 className="font-bold text-white">{item.title}</h3>
+                  </div>
+                  <p className="text-sm text-green-300">{item.text}</p>
                 </div>
-                <p className="text-sm text-green-300">125+ valid vulnerabilities reported</p>
-              </div>
-              
-              <div className="border border-green-500/30 p-4 rounded-lg bg-black/50 hover:border-green-500 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
-                  <Target className="w-5 h-5" />
-                  <h3 className="font-bold text-white">Penetration Testing</h3>
-                </div>
-                <p className="text-sm text-green-300">50+ enterprise assessments completed</p>
-              </div>
-              
-              <div className="border border-green-500/30 p-4 rounded-lg bg-black/50 hover:border-green-500 transition-colors">
-                <div className="flex items-center gap-3 mb-2">
-                  <Award className="w-5 h-5" />
-                  <h3 className="font-bold text-white">Recognition</h3>
-                </div>
-                <p className="text-sm text-green-300">Hall of Fame in 30+ organizations</p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 px-4">
+      <section id="skills" className="py-20 px-4" ref={(el) => (sectionRefs.current.skills = el)}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
+            visibleSections.skills ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+          }`}>
             <Terminal className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ cat skills.txt</span>
           </h2>
           
           <div className="grid md:grid-cols-2 gap-6">
-            {skills.map((skill) => (
-              <div key={skill.name} className="border border-green-500/30 p-6 rounded-lg bg-black/50">
+            {skills.map((skill, idx) => (
+              <div
+                key={skill.name}
+                className={`border border-green-500/30 p-6 rounded-lg bg-black/50 transition-all duration-700 hover:scale-105 hover:border-green-500 ${
+                  visibleSections.skills ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
+              >
                 <div className="flex justify-between mb-2">
                   <span className="text-white font-semibold">{skill.name}</span>
                   <span className="text-green-400">{skill.level}%</span>
                 </div>
-                <div className="w-full bg-green-950/30 rounded-full h-2">
+                <div className="w-full bg-green-950/30 rounded-full h-2 overflow-hidden">
                   <div
                     className="bg-gradient-to-r from-green-500 to-green-400 h-2 rounded-full transition-all duration-1000"
-                    style={{ width: `${skill.level}%` }}
+                    style={{ 
+                      width: visibleSections.skills ? `${skill.level}%` : '0%',
+                      transitionDelay: `${idx * 100 + 200}ms`
+                    }}
                   ></div>
                 </div>
               </div>
@@ -258,9 +313,11 @@ export default function HackerPortfolio() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-gradient-to-b from-green-950/20 to-black">
+      <section id="projects" className="py-20 px-4 bg-gradient-to-b from-green-950/20 to-black" ref={(el) => (sectionRefs.current.projects = el)}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
+            visibleSections.projects ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+          }`}>
             <Bug className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ ls -la findings/</span>
           </h2>
@@ -269,7 +326,10 @@ export default function HackerPortfolio() {
             {projects.map((project, idx) => (
               <div
                 key={idx}
-                className="border border-green-500/30 p-6 rounded-lg bg-black/50 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all group"
+                className={`border border-green-500/30 p-6 rounded-lg bg-black/50 hover:border-green-500 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-700 group hover:scale-105 ${
+                  visibleSections.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
               >
                 <div className="flex justify-between items-start mb-4">
                   <h3 className="text-xl font-bold text-white group-hover:text-green-400 transition-colors">
@@ -295,9 +355,11 @@ export default function HackerPortfolio() {
       </section>
 
       {/* Achievements Section */}
-      <section id="achievements" className="py-20 px-4">
+      <section id="achievements" className="py-20 px-4" ref={(el) => (sectionRefs.current.achievements = el)}>
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-xl sm:text-3xl font-bold mb-12 flex items-center gap-3">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center gap-3 transition-all duration-700 ${
+            visibleSections.achievements ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'
+          }`}>
             <Award className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ grep -i achievements</span>
           </h2>
@@ -306,7 +368,10 @@ export default function HackerPortfolio() {
             {achievements.map((achievement, idx) => (
               <div
                 key={idx}
-                className="border-2 border-green-500/50 p-8 rounded-lg bg-gradient-to-br from-green-950/30 to-black hover:border-green-500 transition-all text-center group hover:scale-105 transform"
+                className={`border-2 border-green-500/50 p-8 rounded-lg bg-gradient-to-br from-green-950/30 to-black hover:border-green-500 transition-all text-center group hover:scale-105 transform duration-700 ${
+                  visibleSections.achievements ? 'opacity-100 translate-y-0 rotate-0' : 'opacity-0 translate-y-10 rotate-3'
+                }`}
+                style={{ transitionDelay: `${idx * 150}ms` }}
               >
                 <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">
                   {achievement.platform}
@@ -320,38 +385,48 @@ export default function HackerPortfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20">
+      <section id="contact" className="py-20 px-4 bg-gradient-to-b from-black to-green-950/20" ref={(el) => (sectionRefs.current.contact = el)}>
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-12 flex items-center justify-center gap-3">
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-12 flex items-center justify-center gap-3 transition-all duration-700 ${
+            visibleSections.contact ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'
+          }`}>
             <Mail className="w-8 h-8" />
             <span className="border-b-2 border-green-500">$ echo "Contact"</span>
           </h2>
           
-          <div className="border border-green-500/30 p-8 rounded-lg bg-black/50 mb-8">
-            <p className="text-green-300 mb-6 text-lg">
-              Interested in collaboration or have a security concern?
-              <br />Let's connect and make the digital world safer.
+          <div className={`border border-green-500/30 p-8 rounded-lg bg-black/50 mb-8 transition-all duration-700 delay-200 ${
+            visibleSections.contact ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}>
+            <p className="text-green-300 mb-6 text-lg min-h-[4rem]">
+              {contactText}<span className={visibleSections.contact ? 'animate-pulse' : ''}>_</span>
             </p>
             
-            <div className="flex flex-wrap justify-center gap-4">
-                 <a
-                   href="mailto:uboy6892@gmail.com"
-                 className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black font-bold rounded hover:bg-green-400 transition-all">
+            <div className={`flex flex-wrap justify-center gap-4 transition-all duration-700 delay-[800ms] ${
+              visibleSections.contact ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+            }`}>
+              <a
+                href="mailto:uboy6892@gmail.com"
+                className="flex items-center gap-2 px-6 py-3 bg-green-500 text-black font-bold rounded hover:bg-green-400 transition-all hover:scale-110"
+              >
                 <Mail className="w-5 h-5" />
                 Email Me
               </a>
             </div>
           </div>
           
-          <div className="flex justify-center gap-6">
-            <a href="https://github.com/codewithubaid1" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
-              <FaGithub className="w-8 h-8" />
+          <div className={`flex justify-center gap-6 transition-all duration-700 delay-[1000ms] ${
+            visibleSections.contact ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}>
+            <a href="https://github.com/codewithubaid1" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-all hover:scale-125 transform">
+              <Github className="w-8 h-8" />
             </a>
-            <a href="https://www.linkedin.com/in/unknown-boy-65b5533a0/" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
-              <FaLinkedin className="w-8 h-8" />
+            <a href="https://www.linkedin.com/in/unknown-boy-65b5533a0/" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-all hover:scale-125 transform">
+              <Linkedin className="w-8 h-8" />
             </a>
-            <a href="https://discord.gg/GEwxr5wV" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-colors">
-              <FaDiscord className="w-8 h-8" />
+            <a href="https://discord.gg/GEwxr5wV" target="_blank" rel="noopener noreferrer" className="hover:text-green-300 transition-all hover:scale-125 transform">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z"/>
+              </svg>
             </a>
           </div>
         </div>
